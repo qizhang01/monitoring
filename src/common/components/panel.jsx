@@ -10,25 +10,18 @@ const style={
     panel:{
         minHeight:100,
         minWidth:100,
-        display:'flex',
-        flexFlow:'column',
         alignItems:'stretch',
         background:'#FFF',
-        padding:'10px 20px 10px 20px'
+        padding:'10px 20px 10px 20px',
+        position: 'relative',
+        border: '1px solid rgb(44, 131, 221)'
     },
     panelHeader:{
         height:40,
-        flexShrink:0,
-        borderBottom:'1px solid #eee',
-        display:'flex'
     },
     panelBody:{
         flexGrow:1
     },
-    title:{
-        display:'flex',
-        alignItems:'center'
-    }
 }
 
 export default class Panel extends React.Component {
@@ -36,26 +29,20 @@ export default class Panel extends React.Component {
         super(props);
     }
     render() {
-        const {title,tools,icon,children,btns=null,wrapper={},bodyStyle={}}=this.props;
-        let _panelStyle=Object.assign({},style.panel,wrapper);
-        let _bodyStyle=Object.assign({},style.panelBody,bodyStyle);
-        return <div className="mime-panel" style={_panelStyle}>
-            <div style={style.panelHeader}>
-                <div style={style.title}>
-                    <span style={{fontSize:16,fontWeight:'blod'}}>{title}</span>
-                    <span style={{cursor:'pointer',color:'#39f',marginLeft:20}}>{icon}</span>
+        const {title}=this.props;
+        return (
+            <div className="mime-panel" style={style.panel}>
+                <div className="image-border image-border1"></div>
+                <div className="image-border image-border2"></div>
+                <div className="image-border image-border3"></div>
+                <div className="image-border image-border4"></div>
+                <div style={style.panelHeader}>
+                    <span style={{fontSize:16, fontWeight:'blod'}}>{title}</span>
                 </div>
-                <div style={{marginLeft:80,flexGrow:1}}>
-                    {tools}
+                <div>
+                    {this.props.children}
                 </div>
-                <div style={{width:120}}>
-                    {btns}
-                </div>
-            </div>
-            <div style={_bodyStyle}>
-                {this.props.children}
-            </div>
-        </div>
+            </div>)
     }
 
 }

@@ -12,7 +12,6 @@ import wish from 'src/common/wish';
 import AuthContainer from 'bundle-loader?lazy!src/router/config/index';
 import ReportContainer from 'bundle-loader?lazy!src/router/report/index';
 import UCContainer from 'bundle-loader?lazy!src/router/uc/index';
-import AppList from 'bundle-loader?lazy!src/router/summary/index';
 /**
  * Bundle加载业务组件
  * @Author   
@@ -35,11 +34,7 @@ const RouterUC = (props) => {
 }
 
 
-const RouterAppList = (props) => {
-    return <Bundle load={AppList}>
-        {(Container) => <Container {...props}/>}
-    </Bundle>
-}
+
 const RouterReport = (props) => {
     return <Bundle load={ReportContainer}>
         {(Container) => <Container {...props}/>}
@@ -81,7 +76,6 @@ export default class RouterLayout extends React.Component {
     render() {
         return (<Switch>
             <PrivateRoute path="/monitoring/auth" component={RouterAuth}/>
-            <PrivateRoute path="/monitoring/summary" component={RouterAppList}/>
             <PrivateRoute path="/monitoring/uc" component={RouterUC}/>
             <PrivateRoute path="/monitoring/report" component={RouterReport}/>
             <Route component={RouteNoFound} />

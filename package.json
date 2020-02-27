@@ -1,0 +1,96 @@
+{
+  "name": "jykl_monitoring_Manager",
+  "version": "1.0.0",
+  "description": "monitoring system",
+  "main": "main.js",
+  "homepage": ".",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --watch --progress --inline --hot",
+    "electron": "electron .",
+    "dist": "electron-builder --win --x64"
+  },
+  "build": {
+    "appId": "com.fthospital.app",
+    "directories": {
+      "output": "builder"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "zip"
+      ]
+    },
+    "files": [
+      "build/**/*",
+      "main.js"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/daoxiaozhang/react-saga.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-function-bind": "^6.22.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-preset-stage-2": "^6.22.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "babel-register": "^6.22.0",
+    "bundle-loader": "^0.5.5",
+    "clean-webpack-plugin": "^0.1.17",
+    "cross-env": "^5.1.1",
+    "css-loader": "^0.28.11",
+    "duplicate-package-checker-webpack-plugin": "^1.2.6",
+    "electron": "^6.0.12",
+    "electron-builder": "^21.2.0",
+    "electron-rebuild": "^1.8.6",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^2.30.1",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.5",
+    "prop-types": "^15.6.1",
+    "react-dnd": "^2.6.0",
+    "react-dnd-html5-backend": "^2.6.0",
+    "react-hot-loader": "^4.0.0",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.8.1",
+    "webpack-browser-plugin": "^1.0.20",
+    "webpack-bundle-analyzer": "^2.9.1",
+    "webpack-dev-server": "^2.9.4"
+  },
+  "dependencies": {
+    "ajv": "^6.0.0",
+    "antd": "^3.2.3",
+    "axios": "^0.17.0",
+    "babel-polyfill": "^6.26.0",
+    "classnames": "^2.2.5",
+    "copy-webpack-plugin": "^5.1.1",
+    "echarts": "^4.1.0",
+    "echarts-for-react": "^2.0.12-beta.0",
+    "jsbarcode": "^3.11.0",
+    "lodash.debounce": "^4.0.8",
+    "lodash.mapvalues": "^4.6.0",
+    "lodash.uniqueid": "^4.0.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-onclickoutside": "^6.7.1",
+    "react-quill": "^1.2.7",
+    "react-redux": "^5.0.6",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0"
+  }
+}

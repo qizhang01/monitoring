@@ -1,0 +1,61 @@
+@bgColor: #333;
+@mainColor: #009688;
+@mainTxtColor: #333333;
+@lightTxtColor: #666666;
+@lighterTxtColor: #999999;
+@disableColor: #C0C0C0;
+@lineColor: #E6E6E6;
+@lightBgColor: #F3F3F3;
+@activeColor:#3399FF;
+@grayBgColor:#CCC;
+@lightGrayBgColor:#F0F2F5;
+
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar:horizontal{
+    height: 4px;
+}
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: #999;
+    width: 4px;
+}
+
+.fontStyle(@size, @color:@mainTxtColor) {
+    font-family: 'Microsoft YaHei';
+    font-size: @size;
+    color: @color;
+}
+
+.shadow {
+    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.25);
+}
+/*主标题*/
+
+.big-title-font {
+    .fontStyle(20px)
+}
+/*主标题*/
+
+.main-title-font {
+    font-weight: bold;
+    .fontStyle(20px);
+}
+/*副标题*/
+
+.vice-title-font {
+    .fontStyle(16px)
+}
+/*正文内容*/
+
+.content-font {
+    .fontStyle(14px)
+}

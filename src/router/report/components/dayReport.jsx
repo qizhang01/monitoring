@@ -5,8 +5,6 @@ import {Route, Switch,withRouter,Link} from 'react-router-dom';
 import ReactEcharts from 'echarts-for-react';
 import "../styles/index.less"
 import { fetchAPI } from "src/ajax/fetchApi"
-import locale from 'antd/es/date-picker/locale/zh_CN';
-const {MonthPicker} = DatePicker
 
 
 class ReportContainer extends React.Component {
@@ -53,7 +51,8 @@ class ReportContainer extends React.Component {
                     name:'趋势图',
                     type:'line',
                     stack: '总量',
-                    data: ['0.73','1.50','2.00','1.75','1.50','1.00','0.95','0.50']
+                    data: ['0.73','1.50','2.00','1.75','1.50','1.00','0.95','0.50'],
+                    areaStyle: {}
                 },
             ]
         }

@@ -24,28 +24,15 @@ class MonitroingLeft extends React.Component {
                     type: 'pie',
                     radius: ['50%', '70%'],
                     avoidLabelOverlap: false,
-                    label: {
-                        normal: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
-                            show: true,
-                            textStyle: {
-                                fontSize: '30',
-                                fontWeight: 'bold'
-                            }
-                        }
-                    },
                     labelLine: {
                         normal: {
                             show: true,
                         }
                     },
                     data: [
-                        {value: 335, name: '直接访问'},
-                        {value: 310, name: '邮件营销'},
-                        {value: 234, name: '联盟广告'},
+                        {value: 32, name: '102.15.15.234'},
+                        {value: 40, name: '130.15.15.234'},
+                        {value: 28, name: '102.15.0.234'},
                     ]
                 }
             ]

@@ -12,7 +12,7 @@ const style={
         minWidth:100,
         alignItems:'stretch',
         background:'#FFF',
-        padding:'10px 20px 10px 20px',
+        padding:'10px 20px 20px 20px',
         position: 'relative',
         border: '1px solid rgb(44, 131, 221)'
     },
@@ -36,9 +36,11 @@ export default class Panel extends React.Component {
                 <div className="image-border image-border2"></div>
                 <div className="image-border image-border3"></div>
                 <div className="image-border image-border4"></div>
-                <div style={style.panelHeader}>
-                    <span style={{fontSize:16, fontWeight:'blod'}}>{title}</span>
-                </div>
+                { title && (
+                    <div style={style.panelHeader}>
+                        <span style={{fontSize:16, fontWeight:'blod'}}>{title}</span>               
+                    </div>)
+                }     
                 <div>
                     {this.props.children}
                 </div>

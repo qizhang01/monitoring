@@ -69,7 +69,8 @@ export default class Login extends React.Component {
             "employee_id": this.state.account,
             "password": this.state.password
         }
-        document.location.href=`./index.html#/monitoring/report`
+        this.props.history.push('/monitoring/report')
+
 
         // const res = await fetchAPI('login', "", "POST", formData)
         // if( res && res.name){

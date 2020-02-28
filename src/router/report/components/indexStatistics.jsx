@@ -4,13 +4,10 @@ import { fetchAPI } from "src/ajax/fetchApi"
 import util from 'src/common/util'
 import MonitroingLeft from './MonitroingLeft'
 import Panel from 'src/common/Components/panel'
+import Report from './report'
 
 const formItemLayout = { labelCol: { sm: { span: 6 } }, wrapperCol: { sm: { span: 18 } } };
 const style = {
-    border: {
-        border:'1px solid',
-        padding: '10px 0'
-    },
     marginBottom: {
         marginBottom: '10px'
     }
@@ -21,7 +18,7 @@ const SingleLine = (props)=>{
         <Row type='flex' justify='center' className='list-line'>
             {
                 data.map( item => (
-                    <Col span={11}>
+                    <Col span={12}>
                         <div style={{display: 'flex', flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'10px 0'}} className='list-item'>
                             <span>{item.idenfidy}</span>
                             <span>{item.type}</span>
@@ -36,11 +33,9 @@ const SingleLine = (props)=>{
 //lineNum代表每行有几个数据，默认是2
 const JyDayData = ({ data, lineNum })=>{
     const d = getDataStructure(data, lineNum)
-
     const arr = d.map( item => <SingleLine data= {item}></SingleLine>)
     return (
-        <div style={style.border}>
-            <HeaderTitle text='交银人寿今日数据' ifShowStatus={false}></HeaderTitle>
+        <div>
             <Row>
                 {arr}
             </Row>
@@ -50,11 +45,9 @@ const JyDayData = ({ data, lineNum })=>{
 //
 const ServiceStatus = ({ data, lineNum })=>{
     const d = getDataStructure(data, lineNum)
-
     const arr = d.map( item => <SingleLine data= {item}></SingleLine>)
     return (
-        <div style={style.border}>
-            <HeaderTitle text='应用服务状态监控' ifShowStatus={true}></HeaderTitle>
+        <div>
             <Row>
                 {arr}
             </Row>
@@ -142,6 +135,26 @@ let status = [{
     idenfidy: '正常'
 }]
 
+const OrderTotalNumber = (props)=>{
+    let {number} = props
+    const str = number.toString().split('')
+    const stl = {
+        fontSize: '40px',
+        display:'inline-block',
+        width: '48px',
+        height: '60px',
+        border: '1px solid',
+        marginLeft: '5px',
+        fontWeight: 'bold',
+        paddingLeft: '10px'
+    }
+    return (
+        <Row>
+            <span style={{ fontSize:'25PX',fontWeight: 'bold' }}>本月出单总量</span>
+            {str.map(item=><span style={stl}>{item}</span>)}
+        </Row>
+    )
+}
 
 export default class IndexStatistics extends React.Component {
     constructor(props) {
@@ -167,7 +180,7 @@ export default class IndexStatistics extends React.Component {
         return (           
                 <Row type='flex' justify='space-around'>
                     <Col span={6}>
-                        <div style={{border: '1px solid'}}>
+                        <Panel>
                             <MonitroingLeft></MonitroingLeft>
 
                             <MonitroingLeft></MonitroingLeft>
@@ -175,26 +188,31 @@ export default class IndexStatistics extends React.Component {
                             <MonitroingLeft></MonitroingLeft>
 
                             <MonitroingLeft></MonitroingLeft>
-                        </div>
+                        </Panel>
                     </Col>
                     <Col span={10}>
                         <div style={style.marginBottom}>
-                            <span>本月出单总量</span>
+                            <Panel>
+                                <OrderTotalNumber number="009876"></OrderTotalNumber>
+                            </Panel>
                         </div>
                         <div style={style.marginBottom}>
-                            <Panel title='本月各系统出单总量'></Panel>
+                            <Panel title='本月各系统出单量'>
+                                <Report></Report>
+                            </Panel>
                         </div>
                         <div style={style.marginBottom}> 
-                            <Panel title='实时访客量'></Panel>
+                            <Panel title='今日实时访客量(万次/5分钟)'></Panel>
                         </div>
                     </Col>
                     <Col span={6}>
-                        <div >
+                        <Panel title='交银人寿今日数据'>
                             <JyDayData data={data} lineNum={2}></JyDayData>
-                        </div>
-                        <div style={{marginTop: '10px'}}>
+                        </Panel>
+                        <div style={{marginTop: '10px'}}></div>
+                        <Panel title='应用服务状态监控' >
                             <ServiceStatus data={status} lineNum={2}></ServiceStatus>
-                        </div>
+                        </Panel>
                     </Col>
                 </Row>    
             )

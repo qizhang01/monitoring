@@ -56,7 +56,6 @@ var load = function(action) {}
 
 /*function load(action){
 	action.data=action.data||{};
-	return wish.fetch({name:action.type,...action.data},action.method).then((res)=>res);
 }*/
 
 /**

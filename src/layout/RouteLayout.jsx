@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {Route, Switch, Redirect} from 'react-router-dom';
 
 import Bundle from 'src/bundle.jsx';
-import wish from 'src/common/wish';
 
 /**
  * 加载模块的根业务组件

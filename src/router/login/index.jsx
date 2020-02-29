@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.less';
 import {Input,Button,Checkbox,Row,Col,Icon,message} from 'antd'
-import wish from 'src/common/wish'
 import { fetchAPI } from "../../ajax/fetchApi"
 import Logo from './images/jykl.jpg'
 

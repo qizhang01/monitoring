@@ -61,7 +61,6 @@ var load = function(action) {}
 /**
  * 异步加载数据
  * @Author   zhangq
- * @DateTime 2019-7-07
  * @param    {[type]}   action        [description]
  * @yields   {[type]}   [description]
  */
@@ -84,7 +83,6 @@ function* asynLoader(action) {
 /**
  * 定义一个Watcher监控所有类型的action
  * @Author   zhq
- * @DateTime 2019-7-07
  * @yields   {[type]}   [description]
  */
 function* watcher() {
@@ -119,7 +117,6 @@ export default {
     /**
 	 * saga-core 初始化函数
 	 * @Author   zhq
-	 * @DateTime 2019-6-24
 	 * @param    {Object}   reducer 业务Reducer
 	 * @param    {Function}   fetcher 用于异步请求接口的方法、必须返回一个Promise
 	 * @returns  {Object}     Store

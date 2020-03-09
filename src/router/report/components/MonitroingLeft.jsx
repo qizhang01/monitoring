@@ -30,9 +30,58 @@ class MonitroingLeft extends React.Component {
                         }
                     },
                     data: [
-                        {value: 32, name: '102.15.15.234'},
-                        {value: 40, name: '130.15.15.234'},
-                        {value: 28, name: '102.15.0.234'},
+                        {value: 32, 
+                        name: '102.15.15.234',
+                        label: {
+                                formatter: [
+                                    '{title|{b}}',
+                                    '{d}%',
+                                ].join('\n'),
+                                rich: {
+                                    title: {
+                                        align: 'center'
+                                    },
+                                }    
+                            }
+                        },
+                        {value: 40, 
+                         name: '130.15.15.234',
+                         label: {
+                            formatter: [
+                                '{title|{b}}{abg|}',
+                                '{d}%',
+                            ].join('\n'),
+                            rich: {
+                                title: {
+                                    align: 'center'
+                                },
+                                abg: {
+                                    width: '100%',
+                                    align: 'right',
+                                    height: 25,
+                                    borderRadius: [4, 4, 0, 0]
+                                },
+                            }    
+                        }},
+                        {value: 28, 
+                        name: '102.15.0.234',
+                        label: {
+                            formatter: [
+                                '{title|{b}}{abg|}',
+                                '{d}%',
+                            ].join('\n'),
+                            rich: {
+                                title: {
+                                    align: 'center'
+                                },
+                                abg: {
+                                    width: '100%',
+                                    align: 'right',
+                                    height: 25,
+                                    borderRadius: [4, 4, 0, 0]
+                                },
+                            }    
+                        }},
                     ]
                 }
             ]
@@ -45,15 +94,16 @@ class MonitroingLeft extends React.Component {
     render() {
         let {showData}=this.state;
         return (
-        <div className="report-content">
-            <div style={{display:'flex',flexFlow:'column',margin:10}}>
-                <div style={{display:'flex',flexShrink:0}}>
-                    <ReactEcharts
-                        option={showData}
-                        className='left_echarts'/>
+            <div className="report-content" style={{marginTop: '25px',marginBottom:'40px'}}>
+                <div style={{display:'flex',flexFlow:'column',margin:10}}>
+                    <div style={{display:'flex',flexShrink:0}}>
+                        <ReactEcharts
+                            option={showData}
+                            className='left_echarts'/>
+                    </div>
                 </div>
             </div>
-        </div>)
+        )
     }
 }
 

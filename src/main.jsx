@@ -1,29 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-/**
- * 我封装的SagaCore模块
- * 1 创建Store
- * 2 创建Saga
- * 3 内置默认reducer信息
- */
-// import SagaCore from 'src/saga/core';
+import {Provider} from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
 import AppContainer from './app';
-
-
-/* import rootSaga from 'src/saga/index';
-import Store from 'src/saga/store';
-Store.run(rootSaga); */
-
 /**
  * 所有模块的reducer
  */
-// import AppReducer from 'src/router/reducer';
+import AppReducer from 'src/router/reducer';
+import ReportReducer from 'src/router/report/reducer';
+import { watcher } from "src/saga/watcher";
 
+// const sagaMiddleware = createSagaMiddleware();
 // const reducer = {
 //     app: AppReducer,
+//     report: ReportReducer,
 // }
 
+// const store = createStore(
+//     reducer,
+//     applyMiddleware(sagaMiddleware),
+//  );
 
-ReactDOM.render(<AppContainer></AppContainer>, document.getElementById('react'));
+// sagaMiddleware.run(watcher)
+
+// ReactDOM.render(
+//     <Provider store={store}>
+//         <AppContainer />
+//     </Provider>,
+//     document.getElementById('react')
+// );
+
+ReactDOM.render(
+
+    <AppContainer />
+,
+    document.getElementById('react')
+);

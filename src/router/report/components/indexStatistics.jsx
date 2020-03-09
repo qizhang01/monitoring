@@ -20,8 +20,8 @@ const SingleLine = (props)=>{
                 data.map( item => (
                     <Col span={12}>
                         <div style={{display: 'flex', flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'10px 0'}} className='list-item'>
-                            <span>{item.idenfidy}</span>
-                            <span>{item.type}</span>
+                            <span style={{color: item.idenfidy=='异常'?"#F90BFD":'#1E95FF', fontSize: '20px',marginBottom: '3px',fontWeight:'bold'}}>{item.idenfidy}</span>
+                            <span style={{ color:'#7CA1D2', fontSize: '16px'}}>{item.type}</span>
                         </div>
                     </Col>
                 ))
@@ -102,7 +102,7 @@ let status = [{
     idenfidy: '正常'
 },{
     type:'订单服务',
-    idenfidy: '正常'
+    idenfidy: '异常'
 },{
     type:'核保服务',
     idenfidy: '正常'
@@ -139,19 +139,31 @@ const OrderTotalNumber = (props)=>{
     let {number} = props
     const str = number.toString().split('')
     const stl = {
-        fontSize: '40px',
-        display:'inline-block',
-        width: '48px',
-        height: '60px',
-        border: '1px solid',
-        marginLeft: '5px',
-        fontWeight: 'bold',
-        paddingLeft: '10px'
+        topic:{
+            fontSize:'25px',
+            fontWeight: '500', 
+            color: '#0A8CFF',
+            marginRight:'15px'
+        },
+        item:{
+            position: 'relative',
+            top: '5px',
+            fontSize: '40px',
+            display:'inline-block',
+            width: '50px',
+            height: '70px',
+            border: '1px solid #1A3F72',
+            marginLeft: '10px',
+            fontWeight: 'bold',
+            paddingLeft: '12px',
+            color: '#45F0EA',
+            backgroundColor: 'rgba(41,85,252,0.18)'
+        }
     }
     return (
         <Row>
-            <span style={{ fontSize:'25PX',fontWeight: 'bold' }}>本月出单总量</span>
-            {str.map(item=><span style={stl}>{item}</span>)}
+            <span style={stl.topic}>本月出单总量</span>
+            {str.map(item=><span style={stl.item}>{item}</span>)}
         </Row>
     )
 }
@@ -180,7 +192,7 @@ export default class IndexStatistics extends React.Component {
         return (           
                 <Row type='flex' justify='space-around'>
                     <Col span={6}>
-                        <Panel>
+                        <Panel title='网关服务健康状况'>
                             <MonitroingLeft></MonitroingLeft>
 
                             <MonitroingLeft></MonitroingLeft>
@@ -190,7 +202,7 @@ export default class IndexStatistics extends React.Component {
                             <MonitroingLeft></MonitroingLeft>
                         </Panel>
                     </Col>
-                    <Col span={10}>
+                    <Col span={11}>
                         <div style={style.marginBottom}>
                             <Panel>
                                 <OrderTotalNumber number="009876"></OrderTotalNumber>
@@ -210,7 +222,7 @@ export default class IndexStatistics extends React.Component {
                             <JyDayData data={data} lineNum={2}></JyDayData>
                         </Panel>
                         <div style={{marginTop: '10px'}}></div>
-                        <Panel title='应用服务状态监控' >
+                        <Panel title='应用服务状态监控' schematic={true}>
                             <ServiceStatus data={status} lineNum={2}></ServiceStatus>
                         </Panel>
                     </Col>

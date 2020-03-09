@@ -7,6 +7,87 @@ import { fetchAPI } from "src/ajax/fetchApi"
 import Logo from "src/common/images/u3903.png";
 
 const {Header, Sider, Content} = Layout;
+const stl={
+    marginRight: '10px',
+    color: '#FFFFFF',
+    letterSpacing: '2px'
+}
+class TimeComponent extends React.Component {
+    constructor(props){
+        super(props);
+        this.state={
+            time: ''
+        }
+        this.weekMap={
+            1: '一',
+            2: '二',
+            3: '三',
+            4: '四',
+            5: '五',
+            6: '六',
+            7: '七'
+        }
+    }
+
+    componentWillUnmount(){
+        this.timer && clearInterval(this.timer)
+    }
+
+    componentDidMount(){
+        //设置timer
+        this.setTimeInfo();
+    }
+    
+    setTimeInfo(){
+        this.timer = setInterval(()=>{
+            this.setState({
+                time: new Date()
+            })
+        },1000)
+    }
+
+    format(param){
+        let str = param.toString()
+        if(str.length==1){
+            return `0${str}`
+        } else{
+            return str
+        }
+    }
+
+    getAllTime(time){
+        const year = time.getFullYear(),
+            month = time.getMonth(),
+            date = time.getDate(),
+            week = this.weekMap[time.getDay()],
+            hours = this.format(time.getHours()),
+            minutes = this.format(time.getMinutes()),
+            seconds = this.format(time.getSeconds());
+
+        return [
+            `${year}年${month}月${date}日`,
+            `星期${week}`,
+            `${hours}: ${minutes}: ${seconds}`
+        ]
+    }
+
+    render() {
+        const { time } = this.state;
+        let t1 = '', t2='', t3='';
+        if(time){
+           [t1,t2,t3 ]= this.getAllTime(time)
+        }
+        return (time ? (
+            <span style={{fontSize: '17px'}}>
+                <span style={stl}>{t1}</span>
+                <span style={stl}>{t2}</span>
+                <span style={stl}>{t3}</span>
+            </span>): 
+            null
+        )
+    }
+
+}
 
 class LayoutContainer extends React.Component {
     constructor(props) {
@@ -17,7 +98,7 @@ class LayoutContainer extends React.Component {
             ]
         this.state = {
             collapsed: false,
-            offline: false
+            offline: false,
         };
     }
     componentWillMount(){
@@ -38,7 +119,6 @@ class LayoutContainer extends React.Component {
         })
     }
     
-
     toggle = () => {
         this.setState({
             collapsed: !this.state.collapsed,
@@ -100,12 +180,15 @@ class LayoutContainer extends React.Component {
                     </Menu>
                 </Sider>
                 <Layout>
-                    <Header className="app-header"  style={{display:(key=='editor'?'none':''),background:'#fff'}}>
+                    <Header className="app-header"  style={{display:(key=='editor'?'none':''),background:'#142664'}}>
                         <div>
-                            <Icon  style={{display:(key=='editor'?'none':''), color:'#000'}} className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle}/>
+                            <Icon  style={{display:(key=='editor'?'none':''), color:'#1E95FF'}} className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle}/>
+                            <TimeComponent />
                         </div>
                         <div>
-                            <span style ={{ color: "#1890ff", paddingRight: 20}}>交银康联监控管理系统</span>
+                           <span style ={{ color: "#FFFFFF",fontSize: '22px'}}>移动互联数据监控中心</span>
+                        </div>
+                        <div>
                             <Icon type={Offline?'close':'wifi'} style={Offline?null:{color:'green'}}></Icon>
                             <Dropdown overlay={this.menus()} placement="bottomRight">
                                 <Avatar style={{cursor:'pointer'}} size="small" icon="user"></Avatar>

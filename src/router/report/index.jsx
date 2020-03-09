@@ -13,7 +13,9 @@ class ReportContainer extends React.Component {
         return (
             <div className="module-container report-container">
                 <Route exact path="/monitoring/report" render={(props) => {
-                        return <IndexStatistics></IndexStatistics>
+                        return (
+                            <div className="indexStatistics"><IndexStatistics /></div>
+                        )
                     }}/>
                 <Route exact path="/monitoring/report/view" render={(props) => {
                         return <Report></Report>

@@ -15,7 +15,7 @@ class AppContainer extends Component {
         super(props);
     }
     render() {
-        const {store} = this.props;
+        // const {store} = this.props;
         return (
             <Router>
                 <div style={{height:'100%'}}>

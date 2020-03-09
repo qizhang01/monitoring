@@ -75,7 +75,6 @@ function* asynLoader(action) {
         return result;
     } catch (e) {
         console.error('run action:' + action.type);
-        console.error("action load error with a exception")
         console.error(e)
     }
 }

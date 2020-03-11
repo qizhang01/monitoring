@@ -8,7 +8,6 @@ import Bundle from 'src/bundle.jsx';
  * 加载模块的根业务组件
  */
 
-import AuthContainer from 'bundle-loader?lazy!src/router/config/index';
 import ReportContainer from 'bundle-loader?lazy!src/router/report/index';
 import UCContainer from 'bundle-loader?lazy!src/router/uc/index';
 /**
@@ -21,11 +20,6 @@ import UCContainer from 'bundle-loader?lazy!src/router/uc/index';
 
 
 
-const RouterAuth = (props) => {
-    return <Bundle load={AuthContainer}>
-        {(Container) => <Container {...props}/>}
-    </Bundle>
-}
 const RouterUC = (props) => {
     return <Bundle load={UCContainer}>
         {(Container) => <Container {...props}/>}
@@ -74,7 +68,6 @@ export default class RouterLayout extends React.Component {
     }
     render() {
         return (<Switch>
-            <PrivateRoute path="/monitoring/auth" component={RouterAuth}/>
             <PrivateRoute path="/monitoring/uc" component={RouterUC}/>
             <PrivateRoute path="/monitoring/report" component={RouterReport}/>
             <Route component={RouteNoFound} />

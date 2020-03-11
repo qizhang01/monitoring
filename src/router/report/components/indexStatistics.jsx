@@ -5,6 +5,9 @@ import util from 'src/common/util'
 import MonitroingLeft from './MonitroingLeft'
 import Panel from 'src/common/Components/panel'
 import Report from './report'
+import ReactEcharts from 'echarts-for-react';
+import showDataMonth from '../config/configMonth'
+import showDataDay from '../config/configDay'
 
 const formItemLayout = { labelCol: { sm: { span: 6 } }, wrapperCol: { sm: { span: 18 } } };
 const style = {
@@ -19,8 +22,8 @@ const SingleLine = (props)=>{
             {
                 data.map( item => (
                     <Col span={12}>
-                        <div style={{display: 'flex', flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'10px 0'}} className='list-item'>
-                            <span style={{color: item.idenfidy=='异常'?"#F90BFD":'#1E95FF', fontSize: '20px',marginBottom: '3px',fontWeight:'bold'}}>{item.idenfidy}</span>
+                        <div style={{display: 'flex', flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'11px 0'}} className='list-item'>
+                            <span style={{color: item.idenfidy=='异常'?"#F90BFD":'#1E95FF', fontSize: '20px',marginBottom: '10px',fontWeight:'bold'}}>{item.idenfidy}</span>
                             <span style={{ color:'#7CA1D2', fontSize: '16px'}}>{item.type}</span>
                         </div>
                     </Col>
@@ -135,6 +138,58 @@ let status = [{
     idenfidy: '正常'
 }]
 
+const title = {
+    t1: '前置负载均衡',
+    t2: '网关1.2.0负载均衡',
+    t3: '网关1.3.0负载均衡',
+    t4: '前置负载均衡'
+}
+
+const arr=[
+    [{
+        value: 30,
+        name:'102.199.8.45',
+    },{
+        value: 40,
+        name:'152.18.8.40',
+    },{
+        value: 30,
+        name:'12.18.8.66',
+    }],
+
+    [{
+        value: 70,
+        name:'102.199.8.45',
+    },{
+        value: 20,
+        name:'152.18.8.40',
+    },{
+        value: 10,
+        name:'12.18.8.66',
+    }],
+
+    [{
+        value: 40,
+        name:'102.199.8.45',
+    },{
+        value: 20,
+        name:'152.18.8.40',
+    },{
+        value: 40,
+        name:'12.18.8.66',
+    }],
+
+    [{
+        value: 30,
+        name:'102.199.8.45',
+    },{
+        value: 40,
+        name:'152.18.8.40',
+    },{
+        value: 30,
+        name:'12.18.8.66',
+    }],
+]
 const OrderTotalNumber = (props)=>{
     let {number} = props
     const str = number.toString().split('')
@@ -174,7 +229,8 @@ export default class IndexStatistics extends React.Component {
     }
 
     state={
-        
+        showDataMonth: showDataMonth,
+        showDataDay: showDataDay
     }
 
     componentDidMount(){
@@ -184,22 +240,34 @@ export default class IndexStatistics extends React.Component {
     componentWillUnmount(){
 
     }
+    
+    getDayShowData(){
+
+    }
 
     render() {
         let {
-
+            showDataMonth,
+            showDataDay
         }=this.state;
         return (           
                 <Row type='flex' justify='space-around'>
                     <Col span={6}>
                         <Panel title='网关服务健康状况'>
-                            <MonitroingLeft></MonitroingLeft>
+                            <MonitroingLeft 
+                                title={title.t1} 
+                                data={
+                                    arr[0]
+                                }
+                                width='45px'>
 
-                            <MonitroingLeft></MonitroingLeft>
+                            </MonitroingLeft>
 
-                            <MonitroingLeft></MonitroingLeft>
+                            <MonitroingLeft title={title.t2} width='60px' data={arr[1]}></MonitroingLeft>
 
-                            <MonitroingLeft></MonitroingLeft>
+                            <MonitroingLeft title={title.t3} width='60px' data={arr[2]}></MonitroingLeft>
+
+                            <MonitroingLeft title={title.t4} width='45px' data={arr[3]}></MonitroingLeft>
                         </Panel>
                     </Col>
                     <Col span={11}>
@@ -210,11 +278,23 @@ export default class IndexStatistics extends React.Component {
                         </div>
                         <div style={style.marginBottom}>
                             <Panel title='本月各系统出单量'>
-                                <Report></Report>
+                                <div style={{display:'flex',height:300,flexShrink:0}}>
+                                    <ReactEcharts
+                                        option={showDataMonth}
+                                        style={{height: 300, width: '100%'}}
+                                        className='react_for_echarts'/>
+                                </div>
                             </Panel>
                         </div>
                         <div style={style.marginBottom}> 
-                            <Panel title='今日实时访客量(万次/5分钟)'></Panel>
+                            <Panel title='今日实时访客量(万次/5分钟)'>
+                                <div style={{display:'flex',height:300,flexShrink:0}}>
+                                    <ReactEcharts
+                                        option={showDataDay}
+                                        style={{height: 300, width: '100%'}}
+                                        className='react_for_echarts'/>
+                                </div>
+                            </Panel>    
                         </div>
                     </Col>
                     <Col span={6}>

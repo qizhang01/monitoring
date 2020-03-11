@@ -50,10 +50,10 @@ class Index extends PureComponent{
 
     render() {
         const { getFieldDecorator } = this.props.form;
-        const {id} = window.loginInfo
+        const id = 75000567
         return (
             <div style={{ display: 'flex', flexFlow: 'column', flexGrow: 1, margin: "10px 20px" }}>
-                <Row style={{marginBottom: '20px',fontSize: '26px',fontWeight:'bold'}}>修改密码</Row>
+                <Row style={{margin: '20px 0px 20px 30px',color: '#1890ff',fontSize: '26px',fontWeight:'bold'}}>修改密码</Row>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Item {...formItemLayout} label="工号">
                         {getFieldDecorator('id', {
@@ -100,8 +100,8 @@ class Index extends PureComponent{
                         })(<Input.Password placeholder="请再次输入新密码" prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} style={stl}/>)}
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ span: 6, offset: 10 }} style={{marginTop: 20}}>
-                        <Button type="primary" htmlType="submit">
+                    <Form.Item wrapperCol={{ span: 6, offset: 10 }} style={{marginTop: 50}}>
+                        <Button type="primary" htmlType="submit" style={{width: '150px'}}>
                             确定
                         </Button>
                     </Form.Item>

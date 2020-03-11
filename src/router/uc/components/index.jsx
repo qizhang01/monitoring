@@ -10,6 +10,7 @@ import {
     Input,
     Icon,
     message,
+    Popconfirm
 } from 'antd';
 import { fetchAPI } from "src/ajax/fetchApi"
 import util from 'src/common/util'
@@ -22,8 +23,36 @@ const style={
          wrapperCol:{span:20}
     }
 }
-const options = ['ADMIN', 'USER'];
-
+const options = ['ADMIN', 'MOBILE','SOFTDEVELOP'];
+const data = [{
+    employee_id: 7500767,
+    name: '张山',
+    roles: ['MOBILE'],
+    created_at: '2020-2-29',
+    last_login: '2020-3-13',
+    active: true,
+},{
+    employee_id: 7500767,
+    name: '李四',
+    roles: ['MOBILE','ADMIN'],
+    created_at: '2020-2-29',
+    last_login: '2020-3-13',
+    active: false,
+},{
+    employee_id: 7500767,
+    name: '汪五',
+    roles: ['SOFTDEVELOP'],
+    created_at: '2020-2-29',
+    last_login: '2020-3-13',
+    active: true,
+},{
+    employee_id: 7500767,
+    name: '黄六',
+    roles: ['SOFTDEVELOP'],
+    created_at: '2020-2-29',
+    last_login: '2020-3-13',
+    active: true,
+}]
 export default class Index extends React.Component {
     constructor(props) {
         super(props);
@@ -39,7 +68,12 @@ export default class Index extends React.Component {
         inputNum: '' , //输入的工号
         ifSuccessOnce: false  //是否成功新增至少一名
     }
+    
+    displayItem(item){
+        if(item==''){
 
+        }
+    }
     columns = [
         {
             title: '工号',
@@ -64,26 +98,26 @@ export default class Index extends React.Component {
             title: '创建时间',
             dataIndex: 'created_at',
             key:'created_at',
-            render:(text, record)=>{
-                if(text){
-                    const time = util.parseTime(text)
-                    return (<span>{time.day+' '+time.hour}</span>)
-                }else{
-                    return ''
-                }
-            }
+            // render:(text, record)=>{
+            //     if(text){
+            //         const time = util.parseTime(text)
+            //         return (<span>{time.day+' '+time.hour}</span>)
+            //     }else{
+            //         return ''
+            //     }
+            // }
         },{
             title: '上次登录时间',
             dataIndex: 'last_login',
             key:'last_login',
-            render:(text, record)=>{
-                if(text){
-                    const time = util.parseTime(text)
-                    return (<span>{time.day+' '+time.hour}</span>)
-                }else{
-                    return ''
-                }
-            }
+            // render:(text, record)=>{
+            //     if(text){
+            //         const time = util.parseTime(text)
+            //         return (<span>{time.day+' '+time.hour}</span>)
+            //     }else{
+            //         return ''
+            //     }
+            // }
         },{
             title: '状态',
             dataIndex: 'active',
@@ -97,6 +131,18 @@ export default class Index extends React.Component {
                 <a href="javascript:;" onClick={()=>this.editStatus(record)}>{ record.active?'停用':'启用' }</a>
                 <Divider type="vertical"/>
                 <a href="javascript:;" onClick={()=>this.initSign(record)}>重置密码</a>
+                <Divider type="vertical"/>
+                <a href="javascript:;" onClick={()=>this.modifyPermission(record)}>修改权限</a>
+                <Divider type="vertical"/>
+                <Popconfirm
+                    title="确认删除?"
+                    onConfirm={this.confirm}
+                    onCancel={this.cancel}
+                    okText="确定"
+                    cancelText="取消"
+                >
+                    <a href="javascript:;">删除</a>
+                </Popconfirm>,
               </span>
             ),
         }
@@ -107,24 +153,26 @@ export default class Index extends React.Component {
     }
 
     async getAllUsersList(){
-        const d = await fetchAPI('users')
-        let employeeList = d.map( item => {
-            return {
-                ...item,
-                key: item.id
-            }
-        })
-       this.setState({ employeeList})
+
     }
 
+    async modifyPermission(){
+
+    }
+    async confirm(){
+
+    }
+    cancel(){
+
+    }
     onChangeRoles= async (record,e) =>{
         const formData = {
             id: record.id,
             roles: e
         }
-        const res = await fetchAPI('user','','POST',formData)
-         //刷新列表
-        this.getAllUsersList()
+        // const res = await fetchAPI('user','','POST',formData)
+        //  //刷新列表
+        // this.getAllUsersList()
     }
 
     //停用或者激活
@@ -133,9 +181,7 @@ export default class Index extends React.Component {
            id: record.id,
            active: !record.active
         }
-        const res = await fetchAPI('user','','POST',formData)
-        //刷新列表
-        res && this.getAllUsersList()
+
     }
 
     initSign= async record =>{
@@ -143,10 +189,10 @@ export default class Index extends React.Component {
             id: record.id,
             temp_password: '12345678'
         }
-        const res = await fetchAPI('user','','POST',formData)
-        if(res){
-            message.info('密码重置成功')
-        }
+        // const res = await fetchAPI('user','','POST',formData)
+        // if(res){
+        //     message.info('密码重置成功')
+        // }
     }
 
     addRole=()=>{
@@ -162,22 +208,17 @@ export default class Index extends React.Component {
             roles: addRoles
         }
         this.setState({loading: true})
-        const res = await fetchAPI('user','','PUT',formData)
-        if(res){
-            //成功
-            message.success('成功');
-            this.setState({
-                loading: false,
-                addEmployeeName: '',
-                inputNum:'',
-                addRoles: [],
-                ifSuccessOnce: true
-            })
-        }else{
-            message.error('失败');
-            this.setState({loading: false})
-        }
+        // const res = await fetchAPI('user','','PUT',formData)
+        // if(res){
+        //     //成功
+        //     message.success('成功');
+        //     this.setState({
 
+        //     })
+        // }else{
+        //     message.error('失败');
+        //     this.setState({loading: false})
+        // }
     }
 
     cancelModel=()=>{
@@ -207,19 +248,19 @@ export default class Index extends React.Component {
     }
     //输入工号onblur事件
     onBlur = async ()=>{
-        const res = await fetchAPI('employee',this.state.inputNum,'GET',null,'/')
-        if(res){
-            //这个时候去填写名字
-            this.setState({addEmployeeName: res.name})
-        }
+        // const res = await fetchAPI('employee',this.state.inputNum,'GET',null,'/')
+        // if(res){
+        //     //这个时候去填写名字
+        //     this.setState({addEmployeeName: res.name})
+        // }
     }
 
     render() {
         const {employeeList,isShowModel,inputNum, loading,addEmployeeName,defaultPassword,addRoles} = this.state
         return (
             <div style={{ display: 'flex', flexFlow: 'column', flexGrow: 1, margin: "10px 20px" }}>
-                <div className='sale-record_content' style={{minWidth:1140, paddingRight:5,overflow:'hidden'}}>
-                    <Row>
+                <div style={{minWidth:1140, paddingRight:5,overflow:'hidden'}}>
+                    <Row style={{marginBottom: '20px', marginTop: '20px'}}>
                         <Button 
                             type ='primary' 
                             icon="plus"
@@ -230,9 +271,8 @@ export default class Index extends React.Component {
 
                     <Table 
                         columns={this.columns} 
-                        dataSource={employeeList}  
+                        dataSource={data}  
                         bordered 
-                        className='sale-record_tableTh'
                         pagination = {
                             {
                                 pageSize: 15,

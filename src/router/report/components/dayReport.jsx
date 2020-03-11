@@ -52,7 +52,11 @@ class ReportContainer extends React.Component {
                     type:'line',
                     stack: '总量',
                     data: ['0.73','1.50','2.00','1.75','1.50','1.00','0.95','0.50'],
-                    areaStyle: {}
+                    areaStyle: {
+                        color: '#ff6666',
+                        opacity: '0.2'
+                    },
+                    smooth: true
                 },
             ]
         }
@@ -120,7 +124,7 @@ class ReportContainer extends React.Component {
     render() {
         let {showData}=this.state;
         return (
-            <div className="report-content">
+            <div className="report-content" style={{marginTop: '80px'}}>
                 <div style={{display:'flex',flexFlow:'column',margin:30}}>
                     <div style={{display:'flex',height:400,flexShrink:0}}>
                         <ReactEcharts

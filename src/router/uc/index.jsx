@@ -11,10 +11,10 @@ class UCContainer extends React.Component {
     render() {
         return (
             <div className="module-container">
-                <Route exact path="/infusion/uc/admin"render={(props) => {
+                <Route exact path="/monitoring/uc/admin"render={(props) => {
                         return <UC></UC>
                 }}/>
-                <Route exact path="/infusion/uc/passwordChange" render={(props) => {
+                <Route exact path="/monitoring/uc/passwordChange" render={(props) => {
                         return <PasswordChange></PasswordChange>
                 }}/>
             </div>

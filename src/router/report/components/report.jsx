@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Select,DatePicker} from 'antd';
+import {Select,DatePicker,Button} from 'antd';
 import {Route, Switch,withRouter,Link} from 'react-router-dom';
 import ReactEcharts from 'echarts-for-react';
 import "../styles/index.less"
@@ -21,16 +21,14 @@ let monthD = {
         feature : {
             mark : {show: true},
             dataView : {show: true, readOnly: false},
-            magicType : {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            magicType : {show: true, type: ['line', 'bar']},
             restore : {show: true},
             saveAsImage : {show: true}
         }
     },
-    calculable : true,
     xAxis : [
         {
             type : 'category',
-            boundaryGap : false,
             data : ['微店','员福','爱行销','E保通','赠险','交银人寿','卡中心']
         }
     ],
@@ -42,7 +40,7 @@ let monthD = {
     series : [
         {
             name:'趋势图',
-            type:'line',
+            type:'bar',
             stack: '总量',
             data:[1140, 550, 660, 90, 150, 390, 120],
         },
@@ -88,7 +86,7 @@ class ReportContainer extends React.Component {
     parseData(d){
         let obj = {
             name:'趋势图',
-            type:'line',
+            type:'bar',
             stack: '总量',
             data:[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         }
@@ -115,11 +113,20 @@ class ReportContainer extends React.Component {
         //     this.getShowData(year,month)
         // }
     }
+
+    print(){
+        const html = window.document.getElementById('reportChart').innerHTML
+        const win = window.open('','print_window');
+        win.document.write(html);
+        win.print();
+        win.close();
+    }
+
     render() {
         let {selectYear,showData,isOpen}=this.state;
-        return [<div className="report-header">
+        return [<div className="report-header" style={{margin:'30px 0px 20px 30px'}}>
             <div className="form">
-                <span style={{color:'#000'}}>请选择月份</span>
+                <span style={{color:'#000',marginRight: 10}}>请选择月份:</span>
                 <MonthPicker
                     onChange={this.handleMonthChange}
                     placeholder="请选择月份"  
@@ -127,11 +134,9 @@ class ReportContainer extends React.Component {
                    >
                 </MonthPicker>
             </div>
-            <div></div>
         </div>,
-        <div className="report-content">
+        <div className="report-content" id="reportChart">
             <div style={{display:'flex',flexFlow:'column',margin:30}}>
-
                 <div style={{display:'flex',height:400,flexShrink:0}}>
                     <ReactEcharts
                         option={showData}
@@ -139,6 +144,9 @@ class ReportContainer extends React.Component {
                         className='react_for_echarts'/>
                 </div>
             </div>
+        </div>,
+        <div style={{display:'flex',height:100, justifyContent:'center',flexShrink:0,marginTop: 30}}>
+            <Button type='primary' style={{width: 100}} onClick={this.print}>打印</Button>
         </div>]
     }
 }

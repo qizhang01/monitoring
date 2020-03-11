@@ -1,7 +1,7 @@
 import 'src/layout/styles/layout.less';
 import React, {Component, PropTypes} from 'react';
 import {Link, withRouter} from 'react-router-dom';
-import {Layout, Menu, Icon,Avatar,Dropdown} from 'antd';
+import {Layout, Menu, Icon,Avatar,Dropdown,Col} from 'antd';
 import RouteLayout from 'src/layout/RouteLayout'
 import { fetchAPI } from "src/ajax/fetchApi"
 import Logo from "src/common/images/u3903.png";
@@ -57,7 +57,7 @@ class TimeComponent extends React.Component {
 
     getAllTime(time){
         const year = time.getFullYear(),
-            month = time.getMonth(),
+            month = time.getMonth()+1, //返回值是 0（一月） 到 11（十二月） 之间的一个整数
             date = time.getDate(),
             week = this.weekMap[time.getDay()],
             hours = this.format(time.getHours()),
@@ -95,6 +95,9 @@ class LayoutContainer extends React.Component {
         this.keys=[
             'monitoring/auth/uc',
             'monitoring/report',
+            'monitoring/report/view',
+            'monitoring/report/dayTrend',
+            'monitoring/uc/admin'
             ]
         this.state = {
             collapsed: false,
@@ -126,14 +129,13 @@ class LayoutContainer extends React.Component {
     }
 
     logout=async ()=>{
-        const res = await fetchAPI('logout','','POST')
-        document.location.href='./login.html'
+
     }
 
     menus=()=>(
         <Menu>
             <Menu.Item>
-                <Link to="/uc/passwordChange"><a  href="javascript:;" style={{color:'#000'}}><Icon type='edit' theme="twoTone" twoToneColor="#52c41a"></Icon>修改密码</a></Link>
+                <Link to="/monitoring/uc/passwordChange"><a  href="javascript:;" style={{color:'#000'}}><Icon type='edit' theme="twoTone" twoToneColor="#52c41a"></Icon>修改密码</a></Link>
             </Menu.Item>
             <Menu.Item>
                 <a href="javascript:;"  style={{color:'#000'}} onClick={this.logout}><Icon type="thunderbolt" theme="twoTone"/> 退出</a>
@@ -166,34 +168,33 @@ class LayoutContainer extends React.Component {
                         <img src={Logo} alt=""/>
                     </div>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={[key]} defaultOpenKeys={openKeys}>
-
-                        <Menu.SubMenu key="monitoring" title={<span><Icon type="line-chart" /><span>数据监控</span></span>}>
+                        <Menu.SubMenu key="monitoring" title={<span><Icon type="line-chart" /><span>移动室</span></span>}>
                             <Menu.Item key="monitoring/report"><Link to="/monitoring/report" className="app-link">总览</Link></Menu.Item>
                             <Menu.Item key="monitoring/report/view"><Link to="/monitoring/report/view" className="app-link"> 月趋势</Link></Menu.Item>
                             <Menu.Item key="monitoring/report/dayTrend"><Link to="/monitoring/report/dayTrend" className="app-link"> 日趋势</Link></Menu.Item>
                         </Menu.SubMenu>
 
                         <Menu.SubMenu key="auth"  title={<span><Icon type="edit" /><span>设置</span></span>}>
-                            <Menu.Item key="monitoring/auth/uc"><Link to="/monitoring/uc/admin" className="app-link">权限管理</Link></Menu.Item>
+                            <Menu.Item key="monitoring/uc/admin"><Link to="/monitoring/uc/admin" className="app-link">权限管理</Link></Menu.Item>
                         </Menu.SubMenu>
                         
                     </Menu>
                 </Sider>
                 <Layout>
                     <Header className="app-header"  style={{display:(key=='editor'?'none':''),background:'#142664'}}>
-                        <div>
+                        <Col span={8}>
                             <Icon  style={{display:(key=='editor'?'none':''), color:'#1E95FF'}} className="trigger" type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'} onClick={this.toggle}/>
                             <TimeComponent />
-                        </div>
-                        <div>
+                        </Col>
+                        <Col span={8} className='app-top-title'>
                            <span style ={{ color: "#FFFFFF",fontSize: '22px'}}>移动互联数据监控中心</span>
-                        </div>
-                        <div>
+                        </Col>
+                        <Col span={8} className='app-top-banner'>
                             <Icon type={Offline?'close':'wifi'} style={Offline?null:{color:'green'}}></Icon>
                             <Dropdown overlay={this.menus()} placement="bottomRight">
                                 <Avatar style={{cursor:'pointer'}} size="small" icon="user"></Avatar>
                             </Dropdown>
-                        </div>
+                        </Col>
                     </Header>
                     <Content className="layout-content">
                         <RouteLayout></RouteLayout>

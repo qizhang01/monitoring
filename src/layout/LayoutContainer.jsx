@@ -93,7 +93,7 @@ class LayoutContainer extends React.Component {
     constructor(props) {
         super(props);
         this.keys=[
-            'monitoring/auth/uc',
+            'monitoring/uc/passwordChange',
             'monitoring/report',
             'monitoring/report/view',
             'monitoring/report/dayTrend',
@@ -153,12 +153,14 @@ class LayoutContainer extends React.Component {
         let openKeys=[];
 
         if(key){
-            if(key.includes('auth')){
-                openKeys.push('auth')
+            if(key.includes('uc')){
+                openKeys.push('uc')
+            }else if(key.includes('report')){
+                openKeys.push('report')
             }
         }else{
            key='monitoring/report';
-           openKeys.push('monitoring')
+           openKeys.push('report')
         }
 
         return (
@@ -168,13 +170,13 @@ class LayoutContainer extends React.Component {
                         <img src={Logo} alt=""/>
                     </div>
                     <Menu theme="dark" mode="inline" defaultSelectedKeys={[key]} defaultOpenKeys={openKeys}>
-                        <Menu.SubMenu key="monitoring" title={<span><Icon type="line-chart" /><span>移动室</span></span>}>
+                        <Menu.SubMenu key="report" title={<span><Icon type="line-chart" /><span>移动室</span></span>}>
                             <Menu.Item key="monitoring/report"><Link to="/monitoring/report" className="app-link">总览</Link></Menu.Item>
                             <Menu.Item key="monitoring/report/view"><Link to="/monitoring/report/view" className="app-link"> 月趋势</Link></Menu.Item>
                             <Menu.Item key="monitoring/report/dayTrend"><Link to="/monitoring/report/dayTrend" className="app-link"> 日趋势</Link></Menu.Item>
                         </Menu.SubMenu>
 
-                        <Menu.SubMenu key="auth"  title={<span><Icon type="edit" /><span>设置</span></span>}>
+                        <Menu.SubMenu key="uc"  title={<span><Icon type="edit" /><span>设置</span></span>}>
                             <Menu.Item key="monitoring/uc/admin"><Link to="/monitoring/uc/admin" className="app-link">权限管理</Link></Menu.Item>
                         </Menu.SubMenu>
                         
@@ -192,7 +194,7 @@ class LayoutContainer extends React.Component {
                         <Col span={8} className='app-top-banner'>
                             <Icon type={Offline?'close':'wifi'} style={Offline?null:{color:'green'}}></Icon>
                             <Dropdown overlay={this.menus()} placement="bottomRight">
-                                <Avatar style={{cursor:'pointer'}} size="small" icon="user"></Avatar>
+                                <Avatar style={{cursor:'pointer',color:"#1890ff"}} size="small" icon="user"></Avatar>
                             </Dropdown>
                         </Col>
                     </Header>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Route, Switch,withRouter } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
 import UC from 'src/router/uc/components/index'
 import {PasswordChange} from './components/passwordChange'
@@ -21,4 +21,16 @@ class UCContainer extends React.Component {
         )
     }
 }
-export default withRouter(UCContainer)
+
+// const mapStateToProps = state => ({
+//     list: state.lists
+// })
+// const mapActionToProps = dispatch => ({
+//     fetchUsersList: value => dispatch({
+//         type: 'fetch_user_list',
+//         payload: ''
+//     })
+// })
+
+export default UCContainer
+

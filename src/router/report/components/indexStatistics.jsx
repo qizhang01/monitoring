@@ -36,7 +36,7 @@ const SingleLine = (props)=>{
 //lineNum代表每行有几个数据，默认是2
 const JyDayData = ({ data, lineNum })=>{
     const d = getDataStructure(data, lineNum)
-    const arr = d.map( item => <SingleLine data= {item}></SingleLine>)
+    const arr = d.map( (item,index) => <SingleLine key={index} data= {item}></SingleLine>)
     return (
         <div>
             <Row>
@@ -146,49 +146,65 @@ const title = {
 }
 
 const arr=[
-    [{
-        value: 30,
-        name:'102.199.8.45',
-    },{
-        value: 40,
-        name:'152.18.8.40',
-    },{
-        value: 30,
-        name:'12.18.8.66',
-    }],
+    {  
+        title: title.t1,
+        width: '45px',
+        showData: [{
+            value: 30,
+            name:'102.199.8.45',
+        },{
+            value: 40,
+            name:'152.18.8.40',
+        },{
+            value: 30,
+            name:'12.18.8.66',
+        }]
+    },
 
-    [{
-        value: 70,
-        name:'102.199.8.45',
-    },{
-        value: 20,
-        name:'152.18.8.40',
-    },{
-        value: 10,
-        name:'12.18.8.66',
-    }],
+    {
+        title: title.t2,
+        width: '60px',
+        showData: [{
+            value: 70,
+            name:'102.199.8.45',
+        },{
+            value: 20,
+            name:'152.18.8.40',
+        },{
+            value: 10,
+            name:'12.18.8.66',
+        }],
+    },
 
-    [{
-        value: 40,
-        name:'102.199.8.45',
-    },{
-        value: 20,
-        name:'152.18.8.40',
-    },{
-        value: 40,
-        name:'12.18.8.66',
-    }],
+    {
+        title: title.t3,
+        width: '60px',
+        showData: [{
+            value: 40,
+            name:'102.199.8.45',
+        },{
+            value: 20,
+            name:'152.18.8.40',
+        },{
+            value: 40,
+            name:'12.18.8.66',
+        }]
+    },
 
-    [{
-        value: 30,
-        name:'102.199.8.45',
-    },{
-        value: 40,
-        name:'152.18.8.40',
-    },{
-        value: 30,
-        name:'12.18.8.66',
-    }],
+    {  
+        title: title.t4,
+        width: '45px',
+        showData: [{
+            value: 30,
+            name:'102.199.8.45',
+        },{
+            value: 40,
+            name:'152.18.8.40',
+        },{
+            value: 30,
+            name:'12.18.8.66',
+        }]
+    }
 ]
 const OrderTotalNumber = (props)=>{
     let {number} = props
@@ -218,7 +234,7 @@ const OrderTotalNumber = (props)=>{
     return (
         <Row>
             <span style={stl.topic}>本月出单总量</span>
-            {str.map(item=><span style={stl.item}>{item}</span>)}
+            {str.map((item,index)=><span key={index} style={stl.item}>{item}</span>)}
         </Row>
     )
 }
@@ -254,20 +270,14 @@ export default class IndexStatistics extends React.Component {
                 <Row type='flex' justify='space-around'>
                     <Col span={6}>
                         <Panel title='网关服务健康状况'>
-                            <MonitroingLeft 
-                                title={title.t1} 
-                                data={
-                                    arr[0]
-                                }
-                                width='45px'>
-
-                            </MonitroingLeft>
-
-                            <MonitroingLeft title={title.t2} width='60px' data={arr[1]}></MonitroingLeft>
-
-                            <MonitroingLeft title={title.t3} width='60px' data={arr[2]}></MonitroingLeft>
-
-                            <MonitroingLeft title={title.t4} width='45px' data={arr[3]}></MonitroingLeft>
+                            { arr.map( (item,index) => 
+                                <MonitroingLeft 
+                                    key={index}
+                                    title={item.title}
+                                    data={item.showData}
+                                    width={item.width}
+                                /> )
+                            }
                         </Panel>
                     </Col>
                     <Col span={11}>
@@ -301,7 +311,7 @@ export default class IndexStatistics extends React.Component {
                         <Panel title='交银人寿今日数据'>
                             <JyDayData data={data} lineNum={2}></JyDayData>
                         </Panel>
-                        <div style={{marginTop: '10px'}}></div>
+                        <div style={{marginTop: '15px'}}></div>
                         <Panel title='应用服务状态监控' schematic={true}>
                             <ServiceStatus data={status} lineNum={2}></ServiceStatus>
                         </Panel>

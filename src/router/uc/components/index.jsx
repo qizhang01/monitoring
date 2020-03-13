@@ -14,6 +14,7 @@ import {
 } from 'antd';
 import { fetchAPI } from "src/ajax/fetchApi"
 import util from 'src/common/util'
+import { connect } from 'react-redux';
 
 const FormItem=Form.Item;
 const CheckboxGroup = Checkbox.Group;
@@ -25,40 +26,46 @@ const style={
 }
 const options = ['ADMIN', 'MOBILE','SOFTDEVELOP'];
 const data = [{
-    employee_id: 7500767,
+    employee_id: 1500767,
     name: '张山',
     roles: ['MOBILE'],
     created_at: '2020-2-29',
     last_login: '2020-3-13',
     active: true,
+    needModifyRoles:false
 },{
-    employee_id: 7500767,
+    employee_id: 7500700,
     name: '李四',
     roles: ['MOBILE','ADMIN'],
     created_at: '2020-2-29',
     last_login: '2020-3-13',
     active: false,
+    needModifyRoles:false
 },{
-    employee_id: 7500767,
+    employee_id: 2500559,
     name: '汪五',
     roles: ['SOFTDEVELOP'],
     created_at: '2020-2-29',
     last_login: '2020-3-13',
     active: true,
+    needModifyRoles:false
 },{
-    employee_id: 7500767,
+    employee_id: 3500700,
     name: '黄六',
     roles: ['SOFTDEVELOP'],
     created_at: '2020-2-29',
     last_login: '2020-3-13',
     active: true,
+    needModifyRoles:false
 }]
-export default class Index extends React.Component {
+
+class Index extends React.Component {
     constructor(props) {
         super(props);
     }
 
     state={
+        listData:data,
         isShowModel:false,
         employeeList: [],
         addRoles: [],
@@ -132,7 +139,7 @@ export default class Index extends React.Component {
                 <Divider type="vertical"/>
                 <a href="javascript:;" onClick={()=>this.initSign(record)}>重置密码</a>
                 <Divider type="vertical"/>
-                <a href="javascript:;" onClick={()=>this.modifyPermission(record)}>修改权限</a>
+                <a href="javascript:;" onClick={()=>this.modifyPermission(record)} disabled={!record.needModifyRoles}>修改权限</a>
                 <Divider type="vertical"/>
                 <Popconfirm
                     title="确认删除?"
@@ -153,7 +160,7 @@ export default class Index extends React.Component {
     }
 
     async getAllUsersList(){
-
+       this.props.fetchUsersList()
     }
 
     async modifyPermission(){
@@ -166,13 +173,34 @@ export default class Index extends React.Component {
 
     }
     onChangeRoles= async (record,e) =>{
-        const formData = {
-            id: record.id,
-            roles: e
-        }
+        this.getNewListData(record,e)
+        // const formData = {
+        //     id: record.id,
+        //     roles: e
+        // }
         // const res = await fetchAPI('user','','POST',formData)
         //  //刷新列表
         // this.getAllUsersList()
+    }
+    
+    getNewListData(record,e){
+        const {employee_id} = record
+        const newData = {
+            ...record,
+            roles: e,
+            needModifyRoles: true
+        }
+        const d = this.state.listData
+        const newListData = d.map(item=>{
+            if(item.employee_id==employee_id){
+                return newData
+            }else{
+                return item
+            }
+        });
+        this.setState({
+            listData: newListData
+        })
     }
 
     //停用或者激活
@@ -256,7 +284,7 @@ export default class Index extends React.Component {
     }
 
     render() {
-        const {employeeList,isShowModel,inputNum, loading,addEmployeeName,defaultPassword,addRoles} = this.state
+        const {employeeList,isShowModel,inputNum, loading,addEmployeeName,defaultPassword,addRoles,listData} = this.state
         return (
             <div style={{ display: 'flex', flexFlow: 'column', flexGrow: 1, margin: "10px 20px" }}>
                 <div style={{minWidth:1140, paddingRight:5,overflow:'hidden'}}>
@@ -271,7 +299,7 @@ export default class Index extends React.Component {
 
                     <Table 
                         columns={this.columns} 
-                        dataSource={data}  
+                        dataSource={listData}  
                         bordered 
                         pagination = {
                             {
@@ -343,3 +371,16 @@ export default class Index extends React.Component {
         )    
     }
 }
+
+
+const mapStateToProps = state => ({
+    list: state.lists
+})
+const mapActionToProps = dispatch => ({
+    fetchUsersList: value => dispatch({
+        type: 'fetch_user_list',
+        payload: ''
+    })
+})
+
+export default connect(mapStateToProps, mapActionToProps)(Index);

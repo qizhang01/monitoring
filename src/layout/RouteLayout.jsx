@@ -1,7 +1,6 @@
 import React from 'react' // 引入react
 import {connect} from 'react-redux'
 import {Route, Switch, Redirect} from 'react-router-dom';
-
 import Bundle from 'src/bundle.jsx';
 
 /**

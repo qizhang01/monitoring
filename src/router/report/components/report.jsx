@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Select,DatePicker,Button} from 'antd';
+import {Select,DatePicker,Button, Checkbox} from 'antd';
 import {Route, Switch,withRouter,Link} from 'react-router-dom';
 import ReactEcharts from 'echarts-for-react';
 import "../styles/index.less"
 import { fetchAPI } from "src/ajax/fetchApi"
 import locale from 'antd/es/date-picker/locale/zh_CN';
+import moment from 'moment'
+import 'moment/locale/zh-cn'
+moment.locale('zh-cn')
 
 const {MonthPicker} = DatePicker
 
@@ -54,7 +57,8 @@ class ReportContainer extends React.Component {
             colors:[],
             selectYear: '',
             showData: monthD,
-            isOpen: false
+            isOpen: false,
+            queryHistoryMode: false
         }
     }
 
@@ -121,18 +125,26 @@ class ReportContainer extends React.Component {
         win.print();
         win.close();
     }
+    
+    onChangeModal = (e)=>{
+        this.setState({
+            queryHistoryMode: e.target.checked
+        })
+    }
 
     render() {
-        let {selectYear,showData,isOpen}=this.state;
+        let {selectYear,showData,isOpen,queryHistoryMode}=this.state;
         return [<div className="report-header" style={{margin:'30px 0px 20px 30px'}}>
             <div className="form">
                 <span style={{color:'#000',marginRight: 10}}>请选择月份:</span>
                 <MonthPicker
                     onChange={this.handleMonthChange}
                     placeholder="请选择月份"  
-                    locale={locale}                  
+                    locale={locale} 
+                    disabled={!queryHistoryMode}                 
                    >
                 </MonthPicker>
+                <Checkbox style={{marginLeft: '10px'}} onChange={this.onChangeModal}>查询模式</Checkbox>
             </div>
         </div>,
         <div className="report-content" id="reportChart">

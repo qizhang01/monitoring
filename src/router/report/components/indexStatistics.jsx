@@ -1,10 +1,9 @@
-import React,{PureComponent} from 'react';
-import {Button,Divider,Col,Row} from 'antd';
+import React,{PureComponent, Fragment} from 'react';
+import {Col,Row,Popover} from 'antd';
 import { fetchAPI } from "src/ajax/fetchApi"
 import util from 'src/common/util'
 import MonitroingLeft from './MonitroingLeft'
 import Panel from 'src/common/Components/panel'
-import Report from './report'
 import ReactEcharts from 'echarts-for-react';
 import showDataMonth from '../config/configMonth'
 import showDataDay from '../config/configDay'
@@ -12,27 +11,77 @@ import showDataDay from '../config/configDay'
 const formItemLayout = { labelCol: { sm: { span: 6 } }, wrapperCol: { sm: { span: 18 } } };
 const style = {
     marginBottom: {
-        marginBottom: '10px'
+        marginBottom: '11px'
     }
 }
-const SingleLine = (props)=>{
-    const {data, color} = props
-    return (
-        <Row type='flex' justify='center' className='list-line'>
-            {
-                data.map( item => (
-                    <Col span={12}>
-                        <div style={{display: 'flex', flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'11px 0'}} className='list-item'>
-                            <span style={{color: item.idenfidy=='异常'?"#F90BFD":'#1E95FF', fontSize: '20px',marginBottom: '10px',fontWeight:'bold'}}>{item.idenfidy}</span>
-                            <span style={{ color:'#7CA1D2', fontSize: '16px'}}>{item.type}</span>
-                        </div>
-                    </Col>
-                ))
-            }
-        </Row>
-    )
-}
 
+class SingleLine extends PureComponent {
+    constructor(props){
+        super(props)
+        this.state={
+            data: this.props.data
+        }
+    }
+    componentDidMount(){
+
+    }
+    hide = item => {
+        if(item.idenfidy=="异常"){
+            const type= item.type
+            const data = this.state.data
+            data.forEach( el => {
+                if(el.type==type){
+                    el.popoverVisible = false
+                }
+            })
+            this.setState({data: [...data] })
+        }
+    };
+
+    handleVisibleChange = item => {
+        if(item.idenfidy=="异常"){
+            const type= item.type
+            const data = this.state.data
+            data.forEach( el => {
+                if(el.type==type){
+                    el.popoverVisible = true
+                }
+            })
+            this.setState({data: [...data] })
+        }
+    };
+
+    render(){
+        const {data} = this.state
+        return (
+            <Row type='flex' justify='center' className='list-line'>
+                {
+                    data.map( item => (
+                        <Col span={12} key={item.type}>
+                            <div style={{display: 'flex', flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'12px 0'}} className='list-item'>
+                                <Popover
+                                    content={
+                                        <div style={{display:'flex', flexDirection:'column',alignItems:'center'}}>
+                                            <div style={{marginBottom: '30px'}}>这里将展示具体的异常信息</div>
+                                            <a onClick={()=>this.hide(item)}>关闭</a>
+                                        </div>
+                                    }
+                                    title="查看异常信息"
+                                    trigger="click"
+                                    visible={item.popoverVisible}
+                                    onVisibleChange={()=>this.handleVisibleChange(item)}
+                                >
+                                    <span className={item.idenfidy=='异常'?'hasError':''} style={{color: item.idenfidy=='异常'?"#F90BFD":'#1E95FF', fontSize: '20px',marginBottom: '10px',fontWeight:'bold'}}>{item.idenfidy}</span>
+                                </Popover>
+                                <span style={{ color:'#7CA1D2', fontSize: '0.8vw'}}>{item.type}</span>
+                            </div>
+                        </Col>
+                    ))
+                }
+            </Row>
+        )
+    }
+}
 //lineNum代表每行有几个数据，默认是2
 const JyDayData = ({ data, lineNum })=>{
     const d = getDataStructure(data, lineNum)
@@ -48,7 +97,7 @@ const JyDayData = ({ data, lineNum })=>{
 //
 const ServiceStatus = ({ data, lineNum })=>{
     const d = getDataStructure(data, lineNum)
-    const arr = d.map( item => <SingleLine data= {item}></SingleLine>)
+    const arr = d.map( (item ,index)=> <SingleLine data= {item} key={index}></SingleLine>)
     return (
         <div>
             <Row>
@@ -88,54 +137,70 @@ const getDataStructure = (data, lineNum)=>{
 
 let data = [{
     type: '上传步数人数',
-    idenfidy: 18725
+    idenfidy: 18725,
+    popoverVisible: false
 },{
     type: '获得健走积分人数',
-    idenfidy: 138
+    idenfidy: 138,
+    popoverVisible: false
 },{
     type: '兑换礼品人数',
-    idenfidy: 187
+    idenfidy: 187,
+    popoverVisible: false
 },{
     type: '好生活答题通关人数',
-    idenfidy: 1265
+    idenfidy: 1265,
+    popoverVisible: false
 }]
 
 let status = [{
     type:'产品服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
     type:'订单服务',
-    idenfidy: '异常'
+    idenfidy: '异常',
+    popoverVisible: false
 },{
     type:'核保服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
     type:'承保服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
     type:'MQ服务',
-    idenfidy: '正常'
+    idenfidy: '异常',
+    popoverVisible: false
 },{
     type:'支付服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
     type:'签名服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
     type:'Ecif服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
     type:'保单服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
     type:'递延税服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
     type:'中信信托服务',
-    idenfidy: '正常'
+    idenfidy: '正常',
+    popoverVisible: false
 },{
-    type:'Ecif服务',
-    idenfidy: '正常'
+    type:'E服务',
+    idenfidy: '正常',
+    popoverVisible: false
 }]
 
 const title = {
@@ -211,31 +276,29 @@ const OrderTotalNumber = (props)=>{
     const str = number.toString().split('')
     const stl = {
         topic:{
-            fontSize:'25px',
+            fontSize:'1.3vw',
             fontWeight: '500', 
             color: '#0A8CFF',
-            marginRight:'15px'
+            marginRight:'15px',
+            display:'inline-block'
         },
         item:{
-            position: 'relative',
-            top: '5px',
-            fontSize: '40px',
-            display:'inline-block',
-            width: '50px',
-            height: '70px',
+            fontSize: '2vw',
             border: '1px solid #1A3F72',
-            marginLeft: '10px',
             fontWeight: 'bold',
-            paddingLeft: '12px',
+            marginRight: '10px',
+            padding:'0 10px',
             color: '#45F0EA',
             backgroundColor: 'rgba(41,85,252,0.18)'
         }
     }
     return (
-        <Row>
-            <span style={stl.topic}>本月出单总量</span>
-            {str.map((item,index)=><span key={index} style={stl.item}>{item}</span>)}
-        </Row>
+        <div style={{display:'flex', alignItems:'center'}}>
+            <div style={stl.topic}>本月出单总量</div>
+            <div style={{display:'inline-block', height:'67px',lineHeight:'67px'}}>
+                {str.map((item,index)=><span key={index} style={stl.item}>{item}</span>)}
+            </div>
+        </div>
     )
 }
 
@@ -282,7 +345,7 @@ export default class IndexStatistics extends React.Component {
                     </Col>
                     <Col span={11}>
                         <div style={style.marginBottom}>
-                            <Panel>
+                            <Panel style={{lineHeight: '65px'}}>
                                 <OrderTotalNumber number="009876"></OrderTotalNumber>
                             </Panel>
                         </div>
@@ -311,7 +374,7 @@ export default class IndexStatistics extends React.Component {
                         <Panel title='交银人寿今日数据'>
                             <JyDayData data={data} lineNum={2}></JyDayData>
                         </Panel>
-                        <div style={{marginTop: '15px'}}></div>
+                        <div style={{marginTop: '10px'}}></div>
                         <Panel title='应用服务状态监控' schematic={true}>
                             <ServiceStatus data={status} lineNum={2}></ServiceStatus>
                         </Panel>

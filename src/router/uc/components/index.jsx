@@ -288,7 +288,7 @@ class Index extends React.Component {
         return (
             <div style={{ display: 'flex', flexFlow: 'column', flexGrow: 1, margin: "10px 20px" }}>
                 <div style={{minWidth:1140, paddingRight:5,overflow:'hidden'}}>
-                    <Row style={{marginBottom: '20px', marginTop: '20px'}}>
+                    <Row style={{marginBottom: '10px', marginTop: '20px'}}>
                         <Button 
                             type ='primary' 
                             icon="plus"
@@ -296,7 +296,9 @@ class Index extends React.Component {
                             新增
                         </Button>
                     </Row>
-
+                    <Row style={{display: 'flex',justifyContent:'flex-end',alignItems:'center',fontSize:'18px', paddingRight:'30px',marginBottom:'20px'}}>
+                        注册总人数为:<span style={{margin: '0 10px', fontSize:'24px',color:'#1890ff'}}>{listData.length}</span>人
+                    </Row>
                     <Table 
                         columns={this.columns} 
                         dataSource={listData}  

@@ -165,7 +165,7 @@ class LayoutContainer extends React.Component {
 
         return (
             <Layout className="app-layout">
-                <Sider style={{display:(key=='editor'?'none':'')}} trigger={null} collapsible="collapsible" collapsed={this.state.collapsed}>
+                <Sider style={{display:(key=='editor'?'none':''),flex:'0 0 150px'}} trigger={null} collapsible="collapsible" collapsed={this.state.collapsed}>
                     <div className="logo">
                         <img src={Logo} alt=""/>
                     </div>

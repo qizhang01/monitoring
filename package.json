@@ -73,7 +73,7 @@
   "dependencies": {
     "ajv": "^6.0.0",
     "antd": "^3.2.3",
-    "axios": "^0.17.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "classnames": "^2.2.5",
     "copy-webpack-plugin": "^5.1.1",

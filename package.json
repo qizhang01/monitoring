@@ -71,7 +71,7 @@
     "webpack-dev-server": "^2.9.4"
   },
   "dependencies": {
-    "ajv": "^6.0.0",
+    "ajv": "^6.12.3",
     "antd": "^3.2.3",
     "axios": "^0.17.0",
     "babel-polyfill": "^6.26.0",
